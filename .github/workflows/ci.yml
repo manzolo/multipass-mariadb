@@ -27,7 +27,7 @@ jobs:
       - name: Create VM
         run: ./install.sh
       - name: Backup Database
-        run: ./backup.sh
+        run: ./backupdb.sh
       - name: Stop VM
         run: ./stop.sh
       - name: Start VM
