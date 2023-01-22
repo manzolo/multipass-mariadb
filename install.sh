@@ -74,13 +74,3 @@ run_command_on_vm $VM_NAME $(dirname $0)/script/_load_data.sh
 msg_info "[Task 3]"
 msg_warn "Start env"
 ${HOST_DIR_NAME}/start.sh
-
-echo "Phpmyadmin:"
-msg_info "http://$VM_NAME:$PHPMYADMIN_HOST_PORT"
-echo "Database parameters:
-msg_info "$VM_NAME:$DB_HOST_PORT"
-msg_info "root user:$DB_ROOT_USER"
-msg_info "root password:$DB_ROOT_PASS"
-msg_info "Database name:$DB_NAME"
-msg_info "Database username:$DB_USER"
-msg_info "Database password:$DB_PASS"
