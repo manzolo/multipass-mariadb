@@ -8,6 +8,8 @@ source $(dirname $0)/script/__functions.sh
 msg_warn "Starting vm"
 multipass start $VM_NAME
 
+msg_info "$VM_NAME started!"
+
 . $(dirname $0)/script/_hosts_manager.sh
 
 removehost
@@ -28,7 +30,7 @@ echo "Useful command:"
 echo "Backup database:"
 msg_warn "./backupdb.sh"
 echo "Restore database:"
-msg_warn "./restoredb.sh database_backup_path.sql"
+msg_warn "./restoredb.sh database_backup_filename.sql"
 
 echo ""
 msg_warn "Shell on "$VM_NAME

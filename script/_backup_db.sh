@@ -8,6 +8,6 @@ msg_warn "Backup database..."
 
 MYSQL_CMD="mysqldump -u$DB_USER -p$DB_PASS $DB_NAME"
 #echo $MYSQL_CMD
-docker exec -it $DB_CONTAINER_NAME sh -c "$MYSQL_CMD" > $DUMP_FILE
+docker exec -i $DB_CONTAINER_NAME sh -c "$MYSQL_CMD" > $DUMP_FILE
 
-msg_info "Done!"
+msg_info "backup done in $DUMP_FILE!"

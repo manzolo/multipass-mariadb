@@ -11,3 +11,4 @@ removehost
 msg_warn "Stop vm..."
 multipass stop $VM_NAME
 
+msg_info "$VM_NAME stopped!"
