@@ -45,17 +45,31 @@ echo "$(tput setaf 1)------------------- MANZOLO MARIA DB MANAGER --------------
 echo ""
 echo "$(tput setaf 3)#MariaDB shell:$(tput sgr0)"
 echo ""
-echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -u$DB_ROOT_USER -p$DB_ROOT_PASS" $(tput sgr0)"
+echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -uroot -p$DB_ROOT_PASS" $(tput sgr0)"
 echo ""
 echo "$(tput setaf 3)#Examples:$(tput sgr0)"
 echo ""
 echo "$(tput setaf 3)#Show databases:$(tput sgr0)"
-echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -u$DB_ROOT_USER -p$DB_ROOT_PASS" -e \"show databases;\"$(tput sgr0)"
+echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -uroot -p$DB_ROOT_PASS" -e \"show databases;\"$(tput sgr0)"
 echo ""
 echo "$(tput setaf 3)#Create database:$(tput sgr0)"
-echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -u$DB_ROOT_USER -p$DB_ROOT_PASS" -e \"CREATE DATABASE [DATABASE_NAME];\"$(tput sgr0)"
+echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -uroot -p$DB_ROOT_PASS" -e \"CREATE DATABASE DATABASE_NAME;\"$(tput sgr0)"
 echo ""
+
+echo "$(tput setaf 3)#Create user:$(tput sgr0)"
+echo ""
+echo docker exec -i $DB_CONTAINER_NAME "mysql -uroot -p$DB_ROOT_PASS -e 'CREATE OR REPLACE USER USERNAME@localhost IDENTIFIED BY \"PASSWORD\" ;'"
+echo docker exec -i $DB_CONTAINER_NAME "mysql -uroot -p$DB_ROOT_PASS -e 'CREATE OR REPLACE USER USERNAME@% IDENTIFIED BY \"PASSWORD\" ;'"
+echo docker exec -i $DB_CONTAINER_NAME "mysql -uroot -p$DB_ROOT_PASS -e 'GRANT ALL PRIVILEGES ON DATABASE_NAME.* TO 'USERNAME'@localhost;'"
+echo docker exec -i $DB_CONTAINER_NAME "mysql -uroot -p$DB_ROOT_PASS -e 'GRANT ALL PRIVILEGES ON DATABASE_NAME.* TO 'USERNAME'@%;'"
+echo docker exec -i $DB_CONTAINER_NAME "mysql -uroot -p$DB_ROOT_PASS -e 'FLUSH PRIVILEGES;'"
+
 echo "$(tput setaf 1)-------------------------------------------------------------------------$(tput sgr0)"
 EOF
 
 sudo chmod a+x /etc/update-motd.d/99-manzolo
+
+
+CREATE_USER_CMD="CREATE OR REPLACE USER $DB_USER@\"%\" IDENTIFIED BY \"$DB_PASS\" ;"
+MYSQL_CMD="mysql -uroot -p$DB_ROOT_PASS -e '$CREATE_USER_CMD'"
+docker exec -i $DB_CONTAINER_NAME sh -c "$MYSQL_CMD"

@@ -56,7 +56,7 @@ services:
       - $PHPMYADMIN_HOST_PORT:$PHPMYADMIN_CONTAINER_PORT
     environment:
       - PMA_HOST=$DB_CONTAINER_NAME
-      - PMA_USER=$DB_ROOT_USER
+      - PMA_USER=root
       - PMA_PASSWORD=$DB_ROOT_PASS
     depends_on:
       - $DB_CONTAINER_NAME
