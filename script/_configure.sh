@@ -36,3 +36,26 @@ if [ $(id -gn) != $group ]; then
 fi
 
 docker-compose -f ${HOST_DIR_NAME}/config/docker-compose.yml down && docker-compose -f ${HOST_DIR_NAME}/config/docker-compose.yml rm -f && docker-compose -f ${HOST_DIR_NAME}/config/docker-compose.yml up -d
+
+sudo tee /etc/update-motd.d/99-manzolo > /dev/null <<-EOF
+#!/bin/bash
+echo ""
+echo ""
+echo "$(tput setaf 1)------------------- MANZOLO MARIA DB MANAGER ----------------------------$(tput sgr0)"
+echo ""
+echo "$(tput setaf 3)#MariaDB shell:$(tput sgr0)"
+echo ""
+echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -u$DB_ROOT_USER -p$DB_ROOT_PASS" $(tput sgr0)"
+echo ""
+echo "$(tput setaf 3)#Examples:$(tput sgr0)"
+echo ""
+echo "$(tput setaf 3)#Show databases:$(tput sgr0)"
+echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -u$DB_ROOT_USER -p$DB_ROOT_PASS" -e \"show databases;\"$(tput sgr0)"
+echo ""
+echo "$(tput setaf 3)#Create database:$(tput sgr0)"
+echo "$(tput setaf 2)docker exec -it $DB_CONTAINER_NAME "mysql -u$DB_ROOT_USER -p$DB_ROOT_PASS" -e \"CREATE DATABASE [DATABASE_NAME];\"$(tput sgr0)"
+echo ""
+echo "$(tput setaf 1)-------------------------------------------------------------------------$(tput sgr0)"
+EOF
+
+sudo chmod a+x /etc/update-motd.d/99-manzolo
