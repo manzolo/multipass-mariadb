@@ -58,6 +58,7 @@ services:
       - PMA_HOST=$DB_CONTAINER_NAME
       - PMA_USER=root
       - PMA_PASSWORD=$DB_ROOT_PASS
+      - UPLOAD_LIMIT=300M
     depends_on:
       - $DB_CONTAINER_NAME
 
